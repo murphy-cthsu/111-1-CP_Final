@@ -5,16 +5,18 @@
 #include <string>
 #include <stdio.h>
 
-namespace SDL_setting {
-#define SCRX 750
-#define SCRY 600
+namespace SDL_setting
+{
+#define SCRX 750 // screen width
+#define SCRY 600 // screen height
 	const int margins = 8;
 	const int squaresize = 32;
-	SDL_Window* screen;
-	unsigned int* pixptr;
-	Mix_Music* backgroundMusic = NULL;
-	Mix_Chunk* WallEffect = NULL;
-	Mix_Chunk* PawnEffect = NULL;
+	SDL_Window *screen;
+	SDL_Renderer *renderer;
+	unsigned int *pixptr;
+	Mix_Music *backgroundMusic = NULL;
+	Mix_Chunk *WallEffect = NULL;
+	Mix_Chunk *PawnEffect = NULL;
 
 	inline void putpixel(int x, int y, int color);
 	inline int RGBtoInt(int r, int g, int b);
@@ -24,7 +26,7 @@ namespace SDL_setting {
 	inline int InttoB(int color);
 	inline void grad_square(int x, int y, int width, int height, int color1, int color2);
 	inline SDL_Color RGBAcolor(int r, int g, int b, int a);
-	SDL_Surface* load_image(std::string filename);
+	SDL_Surface *load_image(std::string filename);
 	void loadMusic();
 
 	inline void draw_linex(int x, int ly, int width, int color)
@@ -79,7 +81,7 @@ namespace SDL_setting {
 
 	inline SDL_Color RGBAcolor(int r, int g, int b, int a)
 	{
-		SDL_Color clr = { r,g,b,a };
+		SDL_Color clr = {r, g, b, a};
 		return clr;
 	}
 
@@ -89,10 +91,10 @@ namespace SDL_setting {
 		pixptr[lineoffset + x] = color;
 	}
 
-	SDL_Surface* load_image(std::string filename)
+	SDL_Surface *load_image(std::string filename)
 	{
-		SDL_Surface* loadedImage = NULL;
-		SDL_Surface* optimizedImage = NULL;
+		SDL_Surface *loadedImage = NULL;
+		SDL_Surface *optimizedImage = NULL;
 		loadedImage = IMG_Load(filename.c_str());
 
 		if (loadedImage != NULL)
@@ -112,4 +114,3 @@ namespace SDL_setting {
 		return;
 	}
 }
-
