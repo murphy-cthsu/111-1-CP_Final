@@ -6,6 +6,7 @@
 #include "common.h"
 #include "player.h"
 #include "wall.h"
+using namespace std;
 using namespace SDL_setting;
 
 class Game
@@ -96,15 +97,15 @@ class Game
 			if (!(temp.spx == demo.spx and temp.spy == demo.spy and temp.vertical == demo.vertical))
 			{
 				if (temp.spy != 0)
-					temp.draw_wall(RGBtoInt(190, 130, 60));
-				demo.draw_wall(RGBtoInt(230, 110, 50));
+					temp.draw_wall(RGBtoInt(120, 45, 13));
+				demo.draw_wall(RGBtoInt(190, 110, 50));
 			}
 		}
 		else
 		{
 			demo.spy = 0;
 			if (temp.spy != 0)
-				temp.draw_wall(RGBtoInt(190, 130, 60));
+				temp.draw_wall(RGBtoInt(120, 45, 13)); // 200, 70, 50
 		}
 	}
 	bool wall_place(int mx, int my, int *spx, int *spy, bool *vertical)
@@ -200,18 +201,26 @@ public:
 		for (int i = 0; i < 10; i++)
 			p1->walls[i].set_wall(i, 9);
 	}
+	Player *get_p1()
+	{
+		return p1;
+	}
+	Player *get_p2()
+	{
+		return p2;
+	}
 	void draw_board()
 	{
 		int i, j;
 		for (j = 0; j < 9; j++)
 			for (i = 0; i < 9; i++)
-				draw_square(i * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + j * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+				draw_square(i * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + j * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 		for (i = 0; i < 10; i++)
-			draw_square(i * (squaresize + margins) + 200 - margins, squaresize * 2 + margins + 60, margins, squaresize * 9 + margins * 8, RGBtoInt(190, 130, 60));
+			draw_square(i * (squaresize + margins) + 200 - margins, squaresize * 2 + margins + 60, margins, squaresize * 9 + margins * 8, RGBtoInt(120, 45, 13));
 		for (i = 0; i < 8; i++)
-			draw_square(200, i * (squaresize + margins) + squaresize * 3 + margins + 60, squaresize * 9 + margins * 8, margins, RGBtoInt(190, 130, 60));
-		draw_square(200 - margins, 60, squaresize * 9 + margins * 10, squaresize * 2 + margins, RGBtoInt(190, 130, 60));
-		draw_square(200 - margins, 60 + squaresize * 11 + margins * 9, squaresize * 9 + margins * 10, squaresize * 2 + margins, RGBtoInt(190, 130, 60));
+			draw_square(200, i * (squaresize + margins) + squaresize * 3 + margins + 60, squaresize * 9 + margins * 8, margins, RGBtoInt(120, 45, 13));
+		draw_square(200 - margins, 60, squaresize * 9 + margins * 10, squaresize * 2 + margins, RGBtoInt(120, 45, 13));
+		draw_square(200 - margins, 60 + squaresize * 11 + margins * 9, squaresize * 9 + margins * 10, squaresize * 2 + margins, RGBtoInt(120, 45, 13));
 		for (i = 0; i < 10; i++)
 			p2->walls[i].draw_wall();
 		for (i = 0; i < 10; i++)
