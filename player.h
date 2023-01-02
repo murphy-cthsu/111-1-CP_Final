@@ -8,13 +8,14 @@
 #include "wall.h"
 
 using namespace SDL_setting;
-class Player {
-	SDL_Surface* playerlook, * playerlooksel;
+class Player
+{
+	SDL_Surface *playerlook, *playerlooksel;
 	SDL_Rect entrypoint;
 
 public:
 	Wall walls[10];
-	int desty, locx, locy, wselected;//wselected -1 none, 0-9 blocks, 10 pawn
+	int desty, locx, locy, wselected; // wselected -1 none, 0-9 blocks, 10 pawn
 	bool mouse_over;
 	void reset_player()
 	{
@@ -25,18 +26,19 @@ public:
 		entrypoint.x = 200 + 4 * margins + 4 * squaresize;
 		entrypoint.y = squaresize + 60 + locy * (squaresize + margins);
 	}
-	Player(int sy) {
+	Player(int sy)
+	{
 		desty = 10 - sy;
 		reset_player();
 		if (sy == 9)
 		{
-			playerlook = load_image("C:/Users/User/source/repos/SDLWindow/resources/indx_crimson.png");
-			playerlooksel = load_image("C:/Users/User/source/repos/SDLWindow/resources/sel_indx_crimson.png");
+			playerlook = load_image("src/pixil-frame-0.png");
+			playerlooksel = load_image("src/pixil-frame-0.png");
 		}
 		else if (sy == 1)
 		{
-			playerlook = load_image("C:/Users/User/source/repos/SDLWindow/resources/indx_fawn.png");
-			playerlooksel = load_image("C:/Users/User/source/repos/SDLWindow/resources/sel_indx_fawn.png");
+			playerlook = load_image("src/pixil-frame-1.png");
+			playerlooksel = load_image("src/pixil-frame-1.png");
 		}
 	}
 	~Player()
@@ -44,7 +46,7 @@ public:
 		SDL_FreeSurface(playerlook);
 		SDL_FreeSurface(playerlooksel);
 	}
-	bool can_up(Player* enemy)
+	bool can_up(Player *enemy)
 	{
 		for (int i = 0; i < 10; i++)
 			if ((!enemy->walls[i].vertical) and enemy->walls[i].placed)
@@ -60,7 +62,7 @@ public:
 			return true;
 		return false;
 	}
-	bool can_left(Player* enemy)
+	bool can_left(Player *enemy)
 	{
 		for (int i = 0; i < 10; i++)
 			if ((enemy->walls[i].vertical) and enemy->walls[i].placed)
@@ -76,7 +78,7 @@ public:
 			return true;
 		return false;
 	}
-	bool can_down(Player* enemy)
+	bool can_down(Player *enemy)
 	{
 		for (int i = 0; i < 10; i++)
 			if ((!enemy->walls[i].vertical) and enemy->walls[i].placed)
@@ -92,7 +94,7 @@ public:
 			return true;
 		return false;
 	}
-	bool can_right(Player* enemy)
+	bool can_right(Player *enemy)
 	{
 		for (int i = 0; i < 10; i++)
 			if ((enemy->walls[i].vertical) and enemy->walls[i].placed)
@@ -108,7 +110,7 @@ public:
 			return true;
 		return false;
 	}
-	void select(Player* enemy)
+	void select(Player *enemy)
 	{
 		if (wselected >= 0 and wselected < 10)
 		{
@@ -118,10 +120,12 @@ public:
 		wselected = 9 - wselected;
 		draw_player();
 
-		if (wselected == 10) {
+		if (wselected == 10)
+		{
 			make_around(enemy);
 		}
-		else {
+		else
+		{
 			del_around(enemy);
 		}
 		SDL_Rect temp;
@@ -131,10 +135,10 @@ public:
 		temp.h = SCRY;
 		SDL_UpdateWindowSurfaceRects(screen, &temp, 1);
 	}
-	void make_around(Player* enemy)
+	void make_around(Player *enemy)
 	{
-		SDL_Renderer* renderer = SDL_CreateRenderer(screen, -1, 0);
-		SDL_Texture* text = SDL_CreateTextureFromSurface(renderer, playerlooksel);
+		SDL_Renderer *renderer = SDL_CreateRenderer(screen, -1, 0);
+		SDL_Texture *text = SDL_CreateTextureFromSurface(renderer, playerlooksel);
 
 		SDL_SetTextureAlphaMod(text, 80);
 		if (can_left(enemy))
@@ -276,7 +280,7 @@ public:
 
 		SDL_SetTextureAlphaMod(text, 255);
 	}
-	void del_around(Player* enemy)
+	void del_around(Player *enemy)
 	{
 		if (can_left(enemy))
 		{
@@ -284,23 +288,23 @@ public:
 			{
 				if (enemy->can_left(this))
 				{
-					draw_square((locx - 3) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 1) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+					draw_square((locx - 3) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 1) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 				}
 				else
 				{
 					if (enemy->can_up(this))
 					{
-						draw_square((locx - 2) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 2) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+						draw_square((locx - 2) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 2) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 					}
 					if (enemy->can_down(this))
 					{
-						draw_square((locx - 2) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+						draw_square((locx - 2) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 					}
 				}
 			}
 			else
 			{
-				draw_square((locx - 2) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 1) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+				draw_square((locx - 2) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 1) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 			}
 		}
 		if (can_right(enemy))
@@ -309,23 +313,23 @@ public:
 			{
 				if (enemy->can_right(this))
 				{
-					draw_square((locx + 1) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 1) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+					draw_square((locx + 1) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 1) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 				}
 				else
 				{
 					if (enemy->can_up(this))
 					{
-						draw_square((locx) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 2) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+						draw_square((locx) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 2) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 					}
 					if (enemy->can_down(this))
 					{
-						draw_square((locx) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+						draw_square((locx) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 					}
 				}
 			}
 			else
 			{
-				draw_square((locx) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 1) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+				draw_square((locx) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 1) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 			}
 		}
 		if (can_up(enemy))
@@ -334,23 +338,23 @@ public:
 			{
 				if (enemy->can_up(this))
 				{
-					draw_square((locx - 1) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 3) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+					draw_square((locx - 1) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 3) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 				}
 				else
 				{
 					if (enemy->can_right(this))
 					{
-						draw_square((locx) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 2) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+						draw_square((locx) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 2) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 					}
 					if (enemy->can_left(this))
 					{
-						draw_square((locx - 2) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 2) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+						draw_square((locx - 2) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 2) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 					}
 				}
 			}
 			else
 			{
-				draw_square((locx - 1) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 2) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+				draw_square((locx - 1) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 2) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 			}
 		}
 		if (can_down(enemy))
@@ -359,29 +363,29 @@ public:
 			{
 				if (enemy->can_down(this))
 				{
-					draw_square((locx - 1) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy + 1) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+					draw_square((locx - 1) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy + 1) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 				}
 				else
 				{
 					if (enemy->can_right(this))
 					{
-						draw_square((locx) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+						draw_square((locx) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 					}
 					if (enemy->can_left(this))
 					{
-						draw_square((locx - 2) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+						draw_square((locx - 2) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 					}
 				}
 			}
 			else
 			{
-				draw_square((locx - 1) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+				draw_square((locx - 1) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 			}
 		}
 	}
 	void draw_player()
 	{
-		SDL_Surface* winSurface = SDL_GetWindowSurface(screen);
+		SDL_Surface *winSurface = SDL_GetWindowSurface(screen);
 		if (wselected == 10)
 			SDL_BlitSurface(playerlooksel, NULL, winSurface, &entrypoint);
 		else
@@ -401,7 +405,7 @@ public:
 				return true;
 		return false;
 	}
-	int possible_move(int x, int y, Player* enemy)
+	int possible_move(int x, int y, Player *enemy)
 	{
 		if (can_up(enemy))
 		{
@@ -477,7 +481,7 @@ public:
 				}
 			}
 		}
-		//right
+		// right
 		if (can_right(enemy))
 		{
 			if (enemy->locx - 1 == this->locx and enemy->locy == this->locy)
@@ -515,7 +519,7 @@ public:
 				}
 			}
 		}
-		//down
+		// down
 		if (can_down(enemy))
 		{
 			if (enemy->locx == this->locx and enemy->locy - 1 == this->locy)
@@ -557,16 +561,16 @@ public:
 	}
 	int move(int addx, int addy)
 	{
-		draw_square((locx - 1) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 1) * (squaresize + margins), squaresize, squaresize, RGBtoInt(230, 170, 100));
+		draw_square((locx - 1) * (squaresize + margins) + 200, squaresize * 2 + margins + 60 + (locy - 1) * (squaresize + margins), squaresize, squaresize, RGBtoInt(59, 19, 2));
 		locx += addx;
 		locy += addy;
 		entrypoint.x = (locx - 1) * (squaresize + margins) + 200;
 		entrypoint.y = squaresize + 60 + locy * (squaresize + margins);
-		//pawn sound effect
+		// pawn sound effect
 		Mix_PlayChannel(-1, PawnEffect, 0);
 		draw_player();
 		wselected = -1;
-		if (locy == desty)//game end
+		if (locy == desty) // game end
 			return -1;
 		return 1;
 	}
