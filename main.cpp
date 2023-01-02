@@ -1,3 +1,4 @@
+// update renderer
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -8,10 +9,12 @@
 #include "game.h"
 #include "wall.h"
 #include "player.h"
+#include "Text.h"
 using namespace SDL_setting;
 
 int main(int argc, char *argv[])
 {
+
 	atexit(SDL_Quit);
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 
@@ -21,7 +24,7 @@ int main(int argc, char *argv[])
 	}
 
 	screen = SDL_CreateWindow("Quoridor game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCRX, SCRY, SDL_WINDOW_SHOWN);
-
+	renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (screen == NULL)
 	{
 		fprintf(stderr, "Unable to set 800x600 video: %s\n", SDL_GetError());
@@ -36,7 +39,15 @@ int main(int argc, char *argv[])
 	loadMusic();
 
 	pixptr = (unsigned int *)SDL_GetWindowSurface(screen)->pixels;
+	if (TTF_Init() == -1)
+	{
+		cout << "ttf couldn't be initialized.";
+		exit(1);
+	}
 	Game *main_game = new Game();
+	Textbar *test_text = new Textbar(20, 35, 100, 40, "hiiiiiii");
+	Textbar *turn_text = new Textbar(10, 100, 200, 50, "Now Playing:P1");
+	Textbar *wall_left = new Textbar(10, 200, 180, 50, "Wall Left:");
 	int menucevt;
 	SDL_Rect temp;
 	temp.x = 2;
@@ -47,7 +58,7 @@ int main(int argc, char *argv[])
 	bool move_event_menu = false;
 	while (1)
 	{
-		SDL_Delay(16);
+		SDL_Delay(1);
 		SDL_Event event;
 		// If there is no mi=usic playing
 		if (Mix_PlayingMusic() == 0)
@@ -57,6 +68,13 @@ int main(int argc, char *argv[])
 		}
 		while (SDL_PollEvent(&event))
 		{
+			if (main_game->turn)
+			{
+				turn_text->show_text("Now Playing:P1");
+			}
+			else
+				turn_text->show_text("Now Playing:P2");
+
 			switch (event.type)
 			{
 			case SDL_MOUSEBUTTONUP:
