@@ -138,7 +138,7 @@ namespace SDL_setting
 		backgroundMusic = Mix_LoadMUS("src/backgroundMusic.wav");
 		Mix_VolumeMusic(20);
 		WallEffect = Mix_LoadWAV("src/Wall_soundEffect.wav");
-		Mix_VolumeChunk(WallEffect,20000);
+		Mix_VolumeChunk(WallEffect, 20000);
 		PawnEffect = Mix_LoadWAV("src/Pawn_soundEffect.wav");
 		return;
 	}

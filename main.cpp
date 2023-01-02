@@ -45,9 +45,9 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	Game *main_game = new Game();
-	Textbar *test_text = new Textbar(20, 35, 100, 40, "hiiiiiii");
-	Textbar *turn_text = new Textbar(10, 100, 200, 50, "Now Playing:P1");
-	Textbar *wall_left = new Textbar(10, 200, 180, 50, "Wall Left:");
+	// Textbar *test_text = new Textbar(20, 35, 100, 40, "hiiiiiii");
+	//Textbar *turn_text = new Textbar(20, 200, 250, 50, "Now Playing:P1");
+	// Textbar *wall_left = new Textbar(20, 200, 180, 50, "Wall Left:");
 	int menucevt;
 	SDL_Rect temp;
 	temp.x = 2;
@@ -68,12 +68,6 @@ int main(int argc, char *argv[])
 		}
 		while (SDL_PollEvent(&event))
 		{
-			if (main_game->turn)
-			{
-				turn_text->show_text("Now Playing:P1");
-			}
-			else
-				turn_text->show_text("Now Playing:P2");
 
 			switch (event.type)
 			{
@@ -82,6 +76,25 @@ int main(int argc, char *argv[])
 				{
 					main_game->click_event(event.button.button, event.button.x, event.button.y);
 				}
+				/*if (main_game->turn)
+				{
+					turn_text->show_text("Now Playing:P1");
+				}
+				else
+					turn_text->show_text("Now Playing:P2");
+				if (main_game->game_end)
+				{
+					if (main_game->turn)
+					{
+						turn_text->show_text("P1 Wins");
+						// delete turn_text;
+						// turn_text = new Textbar(20, 200, 250, 50, "P1 Wins");
+					}
+					else
+					{
+						turn_text->show_text("P2 Wins");
+					}
+				}*/
 				break;
 			case SDL_MOUSEMOTION:
 				if (event.motion.y >= 42)

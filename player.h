@@ -6,7 +6,7 @@
 #include "common.h"
 #include "game.h"
 #include "wall.h"
-
+using namespace std;
 using namespace SDL_setting;
 class Player
 {

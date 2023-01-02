@@ -8,7 +8,8 @@
 #include "game.h"
 using namespace SDL_setting;
 
-class Wall {
+class Wall
+{
 public:
 	int spx, spy;
 	bool placed, vertical;
@@ -45,7 +46,6 @@ public:
 				temp.w = margins;
 				temp.h = margins + 2 * squaresize;
 				SDL_UpdateWindowSurfaceRects(screen, &temp, 1);
-
 			}
 			else
 			{
@@ -57,8 +57,6 @@ public:
 					temp.w = margins;
 					temp.h = margins + 2 * squaresize;
 					SDL_UpdateWindowSurfaceRects(screen, &temp, 1);
-
-
 				}
 				else
 				{
@@ -75,7 +73,7 @@ public:
 	}
 	void draw_wall()
 	{
-		draw_wall(RGBtoInt(190,130,60));
+		draw_wall(RGBtoInt(190, 130, 60));
 	}
 	void changepos(int spx, int spy, bool vertical)
 	{
@@ -84,7 +82,7 @@ public:
 		this->spy = spy;
 		this->vertical = vertical;
 		this->placed = true;
-		//wall sound effect
+		// wall sound effect
 		Mix_PlayChannel(-1, WallEffect, 0);
 		draw_wall();
 	}
