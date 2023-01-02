@@ -75,11 +75,11 @@ public:
 	}
 	void draw_wall()
 	{
-		draw_wall(RGBtoInt(140, 30, 10));
+		draw_wall(RGBtoInt(190,130,60));
 	}
 	void changepos(int spx, int spy, bool vertical)
 	{
-		draw_wall(RGBtoInt(190, 130, 60));
+		draw_wall(RGBtoInt(120, 45, 13));
 		this->spx = spx;
 		this->spy = spy;
 		this->vertical = vertical;
